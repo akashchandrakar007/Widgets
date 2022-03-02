@@ -6,7 +6,7 @@ const Search=()=>{
 
   const [term,setTerm]=useState('Programming');
   const [results,setResult]=useState([]);
-    console.log(results);
+
   useEffect(()=>{
       const search=async ()=>{
         const {data}= await axios.get("https://en.wikipedia.org/w/api.php",{
@@ -20,7 +20,23 @@ const Search=()=>{
         });
         setResult(data.query.search);
       }
-      search();
+    if(term && results.length)
+    {
+        Search();
+    }
+    else{
+    const timeoutid=setTimeout(()=>{
+      if(term)
+      {
+          search();
+      }
+    },500);
+
+   return ()=>{
+     clearTimeout(timeoutid);
+   };
+ }
+
   },[term]);
 
   const renderResults=results.map((result)=>{
@@ -35,7 +51,8 @@ const Search=()=>{
             <div className="header">
             {result.title}
             </div>
-            {result.snippet}
+            <span dangerouslySetInnerHTML={{__html:result.snippet}}></span>
+
           </div>
         </div>
     );
