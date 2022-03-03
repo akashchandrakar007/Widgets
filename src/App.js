@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
@@ -35,9 +35,17 @@ const options=[
 ];
 
 const App=()=>{
-  return <div>
-  <Dropdown options={options}/>
-  </div>;
+  const [selected,setSelected]=useState(options[0]);
+  const [showDropdown,setShowDropdown]=useState(true);
+  return (
+  <div>
+  <button onClick={()=>setShowDropdown(!showDropdown)}>Toggel Dropdown</button>
+  {showDropdown?
+  <Dropdown selected={selected} onSelectedChange={setSelected} options={options}/>
+  :null
+  }
+  </div>
+  );
 }
 
 export default App;
