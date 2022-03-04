@@ -40,7 +40,8 @@ const App=()=>{
   return (
   <div>
   <button onClick={()=>setShowDropdown(!showDropdown)}>Toggel Dropdown</button>
-  {showDropdown?
+  {
+  showDropdown?
   <Dropdown selected={selected} onSelectedChange={setSelected} options={options}/>
   :null
   }
